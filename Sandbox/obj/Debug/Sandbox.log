@@ -1,0 +1,9 @@
+﻿  Sandbox.cpp
+G:\GameEngine\NewEngine\Sandbox\src\ExampleLayer.h(167,15): warning C4244: “初始化”: 从“uint32_t”转换到“float”，可能丢失数据
+G:\GameEngine\NewEngine\Sandbox\src\ExampleLayer.h(168,16): warning C4244: “初始化”: 从“uint32_t”转换到“float”，可能丢失数据
+G:\GameEngine\NewEngine\Sandbox\src\ExampleLayer.h(189,1): warning C4305: “参数”: 从“double”到“T”截断
+          with
+          [
+              T=float
+          ]
+  Sandbox.vcxproj -> G:\GameEngine\NewEngine\bin-int\Debug-windows-x86_64\Sandbox\Sandbox.exe
