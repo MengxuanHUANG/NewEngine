@@ -25,7 +25,7 @@ namespace engine
 
 		void Draw();
 		unsigned int AddObject(const Object& object);
-		unsigned int AddLight(const Light& light);
+		unsigned int AddLight(Light& light);
 
 		void RemoveObject(unsigned int index);
 		void RemoveLight(unsigned int index);
@@ -51,7 +51,7 @@ namespace engine
 		std::vector<const Object*> m_Objects;
 		std::vector<const Light*> m_Lights;
 
-		Light m_SignleLight;
+		Light* m_SignleLight;
 
 		const PerspectiveCamera& m_Camera;
 	};

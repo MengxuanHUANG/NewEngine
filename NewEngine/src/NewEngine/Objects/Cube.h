@@ -20,14 +20,14 @@ namespace engine
 
 		virtual void ReCalculateModelMat() override;
 
-		virtual inline unsigned int GetVerticesCount() const override { return m_VericesCount; }
+		virtual inline unsigned int GetVerticesCount() const override { return m_VerticesCount; }
 		virtual inline unsigned int GetIndicesCount() const override { return m_IndicesCount; }
 		virtual inline const float* GetVertices() const override { return vertices; }
 		virtual inline const unsigned int* GetIndices() const override { return indices; }
 		inline unsigned int& GetRendererID() { return m_RendererID; };
 	private:
 		unsigned int m_RendererID;
-		unsigned int m_VericesCount = 24;
+		unsigned int m_VerticesCount = 24;
 		unsigned int m_IndicesCount = 36;
 		glm::vec4 m_Color;
 

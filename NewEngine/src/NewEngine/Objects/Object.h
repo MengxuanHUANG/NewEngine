@@ -37,15 +37,7 @@ namespace engine
 		virtual glm::vec3& GetRotation() { return m_Rotation; }
 		virtual glm::mat4 GetModelMat() { return m_ModelMat; }
 	protected:
-		Object(glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
-			:m_Translation(translation), m_Rotation(rotation), m_Scale(scale)
-		{
-			m_ModelMat = glm::translate(glm::mat4(1.0f), translation);
-			m_ModelMat = glm::rotate(m_ModelMat, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-			m_ModelMat = glm::rotate(m_ModelMat, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-			m_ModelMat = glm::rotate(m_ModelMat, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-			m_ModelMat = glm::scale(m_ModelMat, scale);
-		}
+		Object(glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale);
 		glm::vec3 m_Translation;
 		glm::vec3 m_Rotation;
 		glm::vec3 m_Scale;

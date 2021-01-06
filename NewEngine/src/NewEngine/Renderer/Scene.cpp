@@ -18,8 +18,8 @@ namespace engine
 	void Scene::Draw()
 	{
 		m_ObjectShader->Bind();
-		m_ObjectShader->SetUniformFloat3("u_LightColor", m_SignleLight.GetColor());
-		m_ObjectShader->SetUniformFloat3("u_LightPos", m_SignleLight.GetPosition());
+		m_ObjectShader->SetUniformFloat4("u_LightColor", m_SignleLight->GetColor());
+		m_ObjectShader->SetUniformFloat3("u_LightPos", m_SignleLight->GetPosition());
 		m_ObjectShader->SetUniformFloat3("u_ViewPos", m_Camera.GetPosition());
 		m_ObjectShader->SetUniformFloat("u_SpecularStrength", 1.5);
 		m_ObjectShader->SetUniformMat4("u_View", m_Camera.GetViewMatrix());
@@ -29,7 +29,7 @@ namespace engine
 		RenderCommand::Draw(m_ObjectIndicesCount);
 
 		m_LightShader->Bind();
-		m_LightShader->SetUniformFloat4("u_Color", m_SignleLight.GetColor());
+		m_LightShader->SetUniformFloat4("u_Color", m_SignleLight->GetColor());
 		m_LightShader->SetUniformMat4("u_View", m_Camera.GetViewMatrix());
 		m_LightShader->SetUniformMat4("u_Projection", m_Camera.GetProjectionMatrix());
 		m_LightVA->Bind();
@@ -43,9 +43,9 @@ namespace engine
 		m_ObjectIndicesCount += object.GetIndicesCount();
 		return m_Objects.size();
 	}
-	unsigned int Scene::AddLight(const Light& light)
+	unsigned int Scene::AddLight(Light& light)
 	{
-		m_SignleLight = light;
+		m_SignleLight = &light;
 		return 0;
 	}
 	void Scene::RemoveObject(unsigned int index)
@@ -97,8 +97,8 @@ namespace engine
 	}
 	void Scene::FlushLight()
 	{
-		m_LightVB = std::shared_ptr<VertexBuffer>(VertexBuffer::CreateVertexBuffer(m_SignleLight.GetVertices(), sizeof(m_SignleLight.GetVertices())));
-		m_LightIB = std::shared_ptr<IndexBuffer>(IndexBuffer::CreateIndexBuffer(m_SignleLight.GetIndices(), sizeof(m_SignleLight.GetIndices())));
+		m_LightVB = std::shared_ptr<VertexBuffer>(VertexBuffer::CreateVertexBuffer(m_SignleLight->GetVertices(), sizeof(m_SignleLight->GetVertices())));
+		m_LightIB = std::shared_ptr<IndexBuffer>(IndexBuffer::CreateIndexBuffer(m_SignleLight->GetIndices(), sizeof(m_SignleLight->GetIndices())));
 		m_LightVA = std::shared_ptr<VertexArray>(VertexArray::CreateVertexArray());
 
 		//m_LightCount = sizeof(m_SignleLight.GetIndices())/sizeof(unsigned int);

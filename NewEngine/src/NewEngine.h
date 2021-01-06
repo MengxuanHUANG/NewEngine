@@ -27,4 +27,10 @@
 #include "NewEngine/Camera/PerspectiveCameraController.h"
 
 #include "NewEngine/ImGui/ImGuiDriver.h"
+
+#include "NewEngine/Objects/Object.h"
+#include "NewEngine/Objects/Cube.h"
+#include "NewEngine/Objects/Light.h"
+
+#include "NewEngine/Renderer/Scene.h"
 //-----------------File System-------------------
