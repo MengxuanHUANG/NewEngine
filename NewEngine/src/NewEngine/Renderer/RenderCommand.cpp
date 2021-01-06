@@ -28,9 +28,6 @@ namespace engine
 		MY_ENGINE_ASSERT(s_Renderer3D, "Renderer never initialized!");
 		delete s_Renderer3D;
 	}
-	void RenderCommand::BufferData()
-	{
-	}
 	void RenderCommand::Draw(int count)
 	{
 		s_Renderer3D->Draw(count);

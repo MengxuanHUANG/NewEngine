@@ -17,7 +17,7 @@ namespace engine
 		static void Terminate();
 
 		static void ClearColor(glm::vec4 color);
-		static void BufferData();
+
 		static void Draw(int count);
 
 		static inline RendererAPI GetRendererAPI() { return s_RendererAPI; }

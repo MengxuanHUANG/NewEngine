@@ -77,10 +77,10 @@ public:
 			-0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f, -1.0f,  0.0f,  0.0f, //11
 
 			//right
-			 0.5f, -0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  1.0f, //12
-			 0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  1.0f, //13
-			 0.5f,  0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  1.0f, //14
-			 0.5f,  0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  1.0f, //15
+			 0.5f, -0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  0.0f, //12
+			 0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  0.0f, //13
+			 0.5f,  0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  0.0f, //14
+			 0.5f,  0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  1.0f,  0.0f,  0.0f, //15
 
 			//top
 			 0.5f,  0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f,  1.0f,  0.0f, //16
@@ -89,10 +89,10 @@ public:
 			-0.5f,  0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f,  1.0f,  0.0f, //19
 
 			//bottom
-			-0.5f, -0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  1.0f, //20
-			-0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  1.0f, //21
-			 0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  1.0f, //22
-			 0.5f, -0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  1.0f  //23
+			-0.5f, -0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  0.0f, //20
+			-0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  0.0f, //21
+			 0.5f, -0.5f, -0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  0.0f, //22
+			 0.5f, -0.5f,  0.5f, 1.0f, 0.5f, 0.31f, 1.0f,  0.0f, -1.0f,  0.0f  //23
 		};
 		unsigned int indices[] =
 		{
@@ -232,7 +232,6 @@ public:
 		m_TimeEnd = GetTickCount();
 		
 		float time = (float)(m_TimeEnd - m_TimeStart) / 1000;
-
 		//Model Matrix
 		glm::mat4 model(1.0f);
 		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
@@ -251,7 +250,7 @@ public:
 		RenderCommand::Draw(36);
 
 		model = glm::translate(glm::mat4(1.0f), m_LightPos);
-		model = glm::scale(model, glm::vec3(0.2));
+		model = glm::scale(model, glm::vec3(0.1));
 
 		m_LightShader->Bind();
 		m_LightShader->SetUniformMat4("u_Model", model);
