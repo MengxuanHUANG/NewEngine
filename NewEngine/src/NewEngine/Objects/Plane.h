@@ -1,20 +1,15 @@
 #pragma once
-
 #include "Object.h"
-#include "NewEngine/Renderer/VertexArray.h"
-
-#include <vector>
-#include <string>
 
 namespace engine
 {
-	class Cube : public Object
+	class Plane:public Object
 	{
 	public:
-		Cube(glm::vec4 color = glm::vec4(1.0f), glm::vec3 translation = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
-		Cube(const std::string& file_path, glm::vec3 translation = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
-		~Cube();
-		
+		Plane(glm::vec4 color = glm::vec4(1.0f), glm::vec3 translation = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
+		Plane(const std::string& file_path, glm::vec3 translation = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
+		~Plane();
+
 		glm::vec4& GetColor() override { return m_Color; }
 		void SetTexture(const std::string& file_path);
 
@@ -27,8 +22,8 @@ namespace engine
 		inline unsigned int& GetRendererID() { return m_RendererID; };
 	private:
 		unsigned int m_RendererID;
-		unsigned int m_VerticesCount = 24;
-		unsigned int m_IndicesCount = 36;
+		unsigned int m_VerticesCount = 4;
+		unsigned int m_IndicesCount = 6;
 		glm::vec4 m_Color;
 
 		float* vertices;

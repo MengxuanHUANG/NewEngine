@@ -20,12 +20,14 @@ namespace engine
 	class Scene
 	{
 	public:
-		Scene(const std::string& objectShaderPath, const std::string& lightShaderPath, const PerspectiveCamera& camera);
+		Scene(const std::string& objectShaderPath, const std::string& lightShaderPath, PerspectiveCamera& camera);
 		~Scene();
 
 		void Draw();
-		unsigned int AddObject(const Object& object);
-		unsigned int AddLight(Light& light);
+		void OnUpdate();
+
+		unsigned int AddObject(const std::shared_ptr<Object>& object);
+		unsigned int AddLight(const std::shared_ptr<Light>& light);
 
 		void RemoveObject(unsigned int index);
 		void RemoveLight(unsigned int index);
@@ -48,11 +50,14 @@ namespace engine
 		std::shared_ptr<VertexArray> m_LightVA;
 		std::shared_ptr<Shader> m_LightShader;
 
-		std::vector<const Object*> m_Objects;
-		std::vector<const Light*> m_Lights;
+		std::vector<std::shared_ptr<Object> > m_Objects;
+		std::vector<std::shared_ptr<Light> > m_Lights;
 
-		Light* m_SignleLight;
+		std::shared_ptr<Light> m_SignleLight;
 
-		const PerspectiveCamera& m_Camera;
+		float* m_Colors;
+		float* m_Models;
+
+		PerspectiveCamera& m_Camera;
 	};
 }

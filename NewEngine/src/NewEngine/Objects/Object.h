@@ -31,7 +31,8 @@ namespace engine
 
 		virtual const float* GetVertices() const = 0;
 		virtual const unsigned int* GetIndices() const = 0;
-
+		virtual glm::vec4& GetColor() = 0;
+		
 		virtual glm::vec3& GetScale() { return m_Scale; }
 		virtual glm::vec3& GetTanslate() { return m_Translation; }
 		virtual glm::vec3& GetRotation() { return m_Rotation; }

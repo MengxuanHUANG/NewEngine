@@ -30,7 +30,9 @@
 
 #include "NewEngine/Objects/Object.h"
 #include "NewEngine/Objects/Cube.h"
+#include "NewEngine/Objects/Plane.h"
 #include "NewEngine/Objects/Light.h"
+#include "NewEngine/Objects/PointLight.h"
 
 #include "NewEngine/Renderer/Scene.h"
 //-----------------File System-------------------

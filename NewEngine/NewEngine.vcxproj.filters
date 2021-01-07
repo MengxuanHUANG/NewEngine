@@ -25,6 +25,9 @@
     <Filter Include="src\NewEngine\Log">
       <UniqueIdentifier>{2D3E892E-9954-87C4-E2CB-12E64E21584C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\NewEngine\Objects">
+      <UniqueIdentifier>{15933179-81FF-EC73-4AF3-84D1B61E0FDC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\NewEngine\Renderer">
       <UniqueIdentifier>{82C35B54-6EBD-84A6-572A-1BB743C3EA12}</UniqueIdentifier>
     </Filter>
@@ -33,6 +36,9 @@
     </Filter>
     <Filter Include="src\Platform\OpenGL">
       <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenGL\ImGui">
+      <UniqueIdentifier>{1FAD5648-8B6F-8AD2-D41F-195F402163B0}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
@@ -105,6 +111,27 @@
     <ClInclude Include="src\NewEngine\Events\MouseEvents.h">
       <Filter>src\NewEngine\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\ImGuiDriver.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\imconfig.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\imgui.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\imgui_internal.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\imstb_rectpack.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\imstb_textedit.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\ImGui\imstb_truetype.h">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\NewEngine\Layer\Layer.h">
       <Filter>src\NewEngine\Layer</Filter>
     </ClInclude>
@@ -113,6 +140,18 @@
     </ClInclude>
     <ClInclude Include="src\NewEngine\Log\Log.h">
       <Filter>src\NewEngine\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\Objects\Cube.h">
+      <Filter>src\NewEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\Objects\Light.h">
+      <Filter>src\NewEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\Objects\Object.h">
+      <Filter>src\NewEngine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NewEngine\Objects\PointLight.h">
+      <Filter>src\NewEngine\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\NewEngine\Renderer\GraphicContext.h">
       <Filter>src\NewEngine\Renderer</Filter>
@@ -126,6 +165,9 @@
     <ClInclude Include="src\NewEngine\Renderer\Renderer.h">
       <Filter>src\NewEngine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\NewEngine\Renderer\Scene.h">
+      <Filter>src\NewEngine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\NewEngine\Renderer\Shader.h">
       <Filter>src\NewEngine\Renderer</Filter>
     </ClInclude>
@@ -137,6 +179,15 @@
     </ClInclude>
     <ClInclude Include="src\NewEngine\Renderer\VertexBuffer.h">
       <Filter>src\NewEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImGui\OpenGL3ImGuiDriver.h">
+      <Filter>src\Platform\OpenGL\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImGui\imgui_impl_glfw.h">
+      <Filter>src\Platform\OpenGL\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImGui\imgui_impl_opengl3.h">
+      <Filter>src\Platform\OpenGL\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1437,21 +1488,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\NewEngine\ImGui\imconfig.h" />
-    <ClInclude Include="src\NewEngine\ImGui\imgui.h" />
-    <ClInclude Include="src\NewEngine\ImGui\imgui_internal.h" />
-    <ClInclude Include="src\NewEngine\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="src\NewEngine\ImGui\imstb_textedit.h" />
-    <ClInclude Include="src\NewEngine\ImGui\imstb_truetype.h" />
-    <ClInclude Include="src\NewEngine\ImGui\ImGuiDriver.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGui\OpenGL3ImGuiDriver.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGui\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGui\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\NewEngine\Objects\Object.h" />
-    <ClInclude Include="src\NewEngine\Objects\Cube.h" />
-    <ClInclude Include="src\NewEngine\Objects\Light.h" />
-    <ClInclude Include="src\NewEngine\Renderer\Scene.h" />
-    <ClInclude Include="src\NewEngine\Objects\PointLight.h" />
+    <ClInclude Include="src\NewEngine\Objects\Plane.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NewEngine\Camera\PerspectiveCamera.cpp">
@@ -1475,6 +1512,21 @@
     <ClCompile Include="src\NewEngine\Events\MouseEvents.cpp">
       <Filter>src\NewEngine\Events</Filter>
     </ClCompile>
+    <ClCompile Include="src\NewEngine\ImGui\ImGuiDriver.cpp">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\ImGui\imgui.cpp">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\ImGui\imgui_demo.cpp">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\ImGui\imgui_draw.cpp">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\ImGui\imgui_widgets.cpp">
+      <Filter>src\NewEngine\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\NewEngine\Layer\Layer.cpp">
       <Filter>src\NewEngine\Layer</Filter>
     </ClCompile>
@@ -1483,6 +1535,18 @@
     </ClCompile>
     <ClCompile Include="src\NewEngine\Log\Log.cpp">
       <Filter>src\NewEngine\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\Objects\Cube.cpp">
+      <Filter>src\NewEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\Objects\Light.cpp">
+      <Filter>src\NewEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\Objects\Object.cpp">
+      <Filter>src\NewEngine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NewEngine\Objects\PointLight.cpp">
+      <Filter>src\NewEngine\Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\NewEngine\Renderer\GraphicContext.cpp">
       <Filter>src\NewEngine\Renderer</Filter>
@@ -1496,6 +1560,9 @@
     <ClCompile Include="src\NewEngine\Renderer\Renderer.cpp">
       <Filter>src\NewEngine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\NewEngine\Renderer\Scene.cpp">
+      <Filter>src\NewEngine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\NewEngine\Renderer\Shader.cpp">
       <Filter>src\NewEngine\Renderer</Filter>
     </ClCompile>
@@ -1507,6 +1574,15 @@
     </ClCompile>
     <ClCompile Include="src\NewEngine\Renderer\VertexBuffer.cpp">
       <Filter>src\NewEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImGui\OpenGL3ImGuiDriver.cpp">
+      <Filter>src\Platform\OpenGL\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImGui\imgui_impl_glfw.cpp">
+      <Filter>src\Platform\OpenGL\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>src\Platform\OpenGL\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1538,18 +1614,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\NewEngine\ImGui\imgui.cpp" />
-    <ClCompile Include="src\NewEngine\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="src\NewEngine\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="src\NewEngine\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="src\NewEngine\ImGui\ImGuiDriver.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGui\OpenGL3ImGuiDriver.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="src\NewEngine\Objects\Object.cpp" />
-    <ClCompile Include="src\NewEngine\Objects\Cube.cpp" />
-    <ClCompile Include="src\NewEngine\Objects\Light.cpp" />
-    <ClCompile Include="src\NewEngine\Renderer\Scene.cpp" />
-    <ClCompile Include="src\NewEngine\Objects\PointLight.cpp" />
+    <ClCompile Include="src\NewEngine\Objects\Plane.cpp" />
   </ItemGroup>
 </Project>

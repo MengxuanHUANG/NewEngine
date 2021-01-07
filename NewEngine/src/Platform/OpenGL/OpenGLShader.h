@@ -22,6 +22,8 @@ namespace engine
 		virtual void SetUniformFloat3(const std::string& name, const glm::vec3& value) override;
 		virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) override;
 		virtual void SetUniformArrayi(const std::string& name, const int* values) override;
+		virtual void SetUniformArray4f(const std::string& name, unsigned int count, float* values) override;
+		virtual void SetUniformArrayMat4f(const std::string& name, unsigned int count, float* values) override;
 
 	private:
 		struct ShaderSource

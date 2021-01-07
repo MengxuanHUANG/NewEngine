@@ -15,6 +15,7 @@ namespace engine
 	}
 	void PerspectiveCameraController::OnUpdate()
 	{
+		m_Camera.UpdateCameraVectors();
 	}
 
 	void PerspectiveCameraController::SetPosition(glm::vec3 position)

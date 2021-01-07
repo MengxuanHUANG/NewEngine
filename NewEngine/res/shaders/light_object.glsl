@@ -2,23 +2,27 @@
 #version 330
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec4 color;
-layout(location = 2) in vec3 normal;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoord;
+layout(location = 3) in float texSlot;
+layout(location = 4) in float objectIndex;
 
-uniform mat4 u_Model;
+uniform mat4 u_Models[2];
 uniform mat4 u_View;
 uniform mat4 u_Projection;
 
-out vec4 v_Color;
+out float v_Index;
 out vec3 v_Normal;
 out vec3 v_Position;
 
 void main()
 {
-	gl_Position = u_Projection * u_View * u_Model * vec4(position, 1.0);
-	v_Color = color;
+	int index = int(objectIndex);
+
+	gl_Position = u_Projection * u_View * u_Models[index] * vec4(position, 1.0);
+	v_Index = objectIndex;
 	v_Normal = normal;
-	v_Position = mat3(transpose(inverse(u_Model))) * position;
+	v_Position = mat3(transpose(inverse(u_Models[index]))) * position;
 }
 
 #shader fragment
@@ -26,21 +30,26 @@ void main()
 
 layout(location = 0) out vec4 color;
 
+in float v_Index;
 in vec4 v_Color;
 in vec3 v_Normal;
 in vec3 v_Position;
 
+uniform vec4 u_Color[2];
 uniform vec3 u_LightColor;
 uniform vec3 u_LightPos;
 uniform vec3 u_ViewPos;
 uniform float u_SpecularStrength;
+
 void main()
 {
+	int index = int(v_Index);
+
 	//normal vector
 	vec3 normal = normalize(v_Normal);
 
 	//ambient
-	float ambientStrength = 0.1;
+	float ambientStrength = 0.01;
 	vec3 ambient = ambientStrength * u_LightColor;
 
 	//diffuse
@@ -56,5 +65,5 @@ void main()
 	vec3 specular = u_SpecularStrength * spec * u_LightColor;
 
 	//result
-	color = vec4(ambient + diff + specular, 1.0) * v_Color;
+	color = vec4(ambient + diff + specular, 1.0) * u_Color[index];
 }

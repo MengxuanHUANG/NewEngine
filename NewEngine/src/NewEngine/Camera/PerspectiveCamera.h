@@ -18,12 +18,11 @@ namespace engine
 		void AddRotation(float yaw, float pitch, bool constrain_pitch);
 		void SetProjection(float fov, float aspect_ration, float near_plane, float far_plane);
 
-		inline float GetYaw() const { return m_Yaw; }
-		inline float GetPitch() const { return m_Pitch; }
-		inline const glm::vec3& GetPosition() const { return m_Position; }
+		inline float& GetYaw() { return m_Yaw; }
+		inline float& GetPitch() { return m_Pitch; }
+		inline glm::vec3& GetPosition() { return m_Position; }
 		inline const glm::mat4& GetViewMatrix() const { return m_View; }
 		inline const glm::mat4& GetProjectionMatrix() const { return m_Projection; }
-	private:
 		void UpdateCameraVectors();
 	private:
 		// camera Attributes
