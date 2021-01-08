@@ -20,12 +20,17 @@ public:
 			1.0f, 100.0f, glm::vec3(-1.5f, 1.4f, 3.2f), glm::vec3(0.0f, 1.0f, 0.0f), -66.5f, -16.6f)
 	{
 		m_Scene = std::make_shared<Scene>(shader_path + "light_object.glsl", shader_path + "Light.glsl", m_PerspectiveCam.GetCamera());
-		m_Cube = std::make_shared<Cube>(glm::vec4(1.0f, 0.5f, 0.31f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f), glm::vec3(1.0f));
-		m_Plane = std::make_shared<Plane>(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(90.0f, 0.0f, 0.0f), glm::vec3(5.0f , 5.0f, 1.0f));
+		m_Cube = std::make_shared<Cube>(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f), glm::vec3(1.0f));
+		m_Plane = std::make_shared<Plane>(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, -0.5f, 0.0f), glm::vec3(-90.0f, 0.0f, 0.0f), glm::vec3(5.0f , 5.0f, 1.0f));
 		m_Light = std::make_shared<PointLight>(glm::vec3(-0.2f, 1.0f, 1.0f), glm::vec4(1.0f));
 
-		m_Scene->AddObject(m_Cube);
+		m_Cube->GetMaterial()[0]->ambient = { 0.19225f, 0.19225f, 0.19225f };
+		m_Cube->GetMaterial()[0]->diffuse = { 0.50754f ,0.50754f , 0.50754f };
+		m_Cube->GetMaterial()[0]->specular = { 0.508273f , 0.508273f, 0.508273f };
+		m_Cube->GetMaterial()[0]->shiness = 0.4f * 128.0f;
+
 		m_Scene->AddObject(m_Plane);
+		m_Scene->AddObject(m_Cube);
 		m_Scene->AddLight(m_Light);
 
 		m_Scene->FlushObject();
@@ -50,7 +55,7 @@ public:
 	}
 	void OnImGuiRender() override
 	{
-		ImGui::Begin("NewEngine");
+		ImGui::Begin("Cube");
 		ImGui::SetWindowFontScale(1.0f);
 
 		ImGui::SliderFloat3("Cube Position", &(m_Cube->GetTanslate().x), -2.0f, 2.0f);
@@ -62,7 +67,9 @@ public:
 			m_Cube->GetRotation() = { 0.0f, 0.0f, 0.0f };
 			m_Cube->GetScale() = { 1.0f, 1.0f, 1.0f };
 		}
+		ImGui::End();
 
+		ImGui::Begin("Light");
 		ImGui::SliderFloat("Specular Strength", &(m_Light->GetStrength()), 0.1f, 2.0f);
 		ImGui::SliderFloat3("Light Position", &(m_Light->GetPosition().x), -3.0f, 3.0f);
 		ImGui::ColorEdit4("Light Color", &(m_Light->GetColor().x));
@@ -71,7 +78,9 @@ public:
 			m_Light->GetPosition() = { 1.2f, 1.0f, 2.0f };
 			m_Light->GetColor() = { 1.0f, 1.0f, 1.0f, 1.0f };
 		}
+		ImGui::End();
 
+		ImGui::Begin("Camera");
 		ImGui::SliderFloat3("Camera Position", &(m_PerspectiveCam.GetCamera().GetPosition().x), -5, 10);
 		std::stringstream ss;
 		ss << "Camera Yaw: " << m_PerspectiveCam.GetCamera().GetYaw() << "\n";
@@ -83,7 +92,18 @@ public:
 			m_PerspectiveCam.SetZoomLevel(45.0f);
 			m_PerspectiveCam.SetRotation(-66.5f, -16.6f);
 		}
-
+		if (ImGui::Button("Top"))
+		{
+			m_PerspectiveCam.GetCamera().GetPosition() = { 0.0f, 10.0f, 0.0f };
+			m_PerspectiveCam.SetZoomLevel(45.0f);
+			m_PerspectiveCam.SetRotation(0.0f, -89.0f);
+		}
+		if (ImGui::Button("Front"))
+		{
+			m_PerspectiveCam.GetCamera().GetPosition() = { 0.0f, 0.0f, 10.0f };
+			m_PerspectiveCam.SetZoomLevel(45.0f);
+			m_PerspectiveCam.SetRotation(-90.0f, -0.0f);
+		}
 		ImGui::End();
 	}
 private:

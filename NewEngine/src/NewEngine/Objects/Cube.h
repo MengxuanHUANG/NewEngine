@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "NewEngine/Renderer/VertexArray.h"
 
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -11,6 +12,7 @@ namespace engine
 	class Cube : public Object
 	{
 	public:
+		Cube();
 		Cube(glm::vec4 color = glm::vec4(1.0f), glm::vec3 translation = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
 		Cube(const std::string& file_path, glm::vec3 translation = glm::vec3(0.0f), glm::vec3 rotation = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f));
 		~Cube();
@@ -20,6 +22,8 @@ namespace engine
 
 		virtual void ReCalculateModelMat() override;
 
+		virtual inline std::vector<std::shared_ptr<Material> >& GetMaterial() override { return m_Materials; }
+		virtual inline  unsigned int GetMaterialCount() const override { return m_Materials.size(); }
 		virtual inline unsigned int GetVerticesCount() const override { return m_VerticesCount; }
 		virtual inline unsigned int GetIndicesCount() const override { return m_IndicesCount; }
 		virtual inline const float* GetVertices() const override { return vertices; }
@@ -33,5 +37,6 @@ namespace engine
 
 		float* vertices;
 		unsigned int* indices;
+		std::vector<std::shared_ptr<Material> > m_Materials;
 	};
 }

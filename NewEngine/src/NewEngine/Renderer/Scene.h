@@ -55,8 +55,9 @@ namespace engine
 
 		std::shared_ptr<Light> m_SignleLight;
 
-		float* m_Colors;
-		float* m_Models;
+		float* m_Colors = nullptr;
+		float* m_Models = nullptr;
+		float* m_NormalMatrixes = nullptr;
 
 		PerspectiveCamera& m_Camera;
 	};

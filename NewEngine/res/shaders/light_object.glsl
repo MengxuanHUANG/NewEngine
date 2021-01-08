@@ -4,66 +4,83 @@
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec2 texCoord;
-layout(location = 3) in float texSlot;
+layout(location = 3) in float materialIndex;
 layout(location = 4) in float objectIndex;
 
-uniform mat4 u_Models[2];
+uniform mat4 u_Models[10];
 uniform mat4 u_View;
 uniform mat4 u_Projection;
+uniform mat4 u_NormalMat[10];
 
-out float v_Index;
+out float v_ObjectIndex;
+out float v_MaterialIndex;
 out vec3 v_Normal;
 out vec3 v_Position;
 
 void main()
 {
-	int index = int(objectIndex);
+	int oIndex = int(objectIndex);
 
-	gl_Position = u_Projection * u_View * u_Models[index] * vec4(position, 1.0);
-	v_Index = objectIndex;
-	v_Normal = normal;
-	v_Position = mat3(transpose(inverse(u_Models[index]))) * position;
+	gl_Position = u_Projection * u_View * u_Models[oIndex] * vec4(position, 1.0);
+	v_ObjectIndex = objectIndex;
+	v_MaterialIndex = materialIndex;
+	v_Normal = mat3(u_NormalMat[oIndex]) * normal;
+	v_Position = mat3(u_Models[oIndex]) * position;
 }
 
 #shader fragment
 #version 330
 
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    float shininess;
+}; 
+struct Light {
+    vec3 position;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
 layout(location = 0) out vec4 color;
 
-in float v_Index;
+in float v_ObjectIndex;
+in float v_MaterialIndex;
 in vec4 v_Color;
 in vec3 v_Normal;
 in vec3 v_Position;
 
-uniform vec4 u_Color[2];
-uniform vec3 u_LightColor;
-uniform vec3 u_LightPos;
+uniform vec4 u_VertexColor[10];
+uniform Light u_Light;
 uniform vec3 u_ViewPos;
-uniform float u_SpecularStrength;
+uniform Material u_Materials[10];
 
 void main()
 {
-	int index = int(v_Index);
+	int oIndex = int(v_ObjectIndex);
+	int mIndex = int(v_MaterialIndex);
 
 	//normal vector
 	vec3 normal = normalize(v_Normal);
 
 	//ambient
-	float ambientStrength = 0.01;
-	vec3 ambient = ambientStrength * u_LightColor;
+	vec3 ambient = u_Materials[mIndex].ambient * u_Light.ambient;
 
 	//diffuse
-	vec3 lightDir = normalize( u_LightPos - v_Position);
+	vec3 lightDir = normalize( u_Light.position - v_Position);
 	float diff = max(dot(normal, lightDir), 0.0);
-	vec3 diffuse = diff * u_LightColor;
+	vec3 diffuse = u_Light.diffuse * (diff * u_Materials[mIndex].diffuse);
 	
 	//specular
 	//float specularStrength = 0.5;
 	vec3 viewDir = normalize(u_ViewPos - v_Position);
 	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = u_SpecularStrength * spec * u_LightColor;
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Materials[mIndex].shininess);
+	vec3 specular = u_Light.specular * (spec * u_Materials[mIndex].specular);
 
 	//result
-	color = vec4(ambient + diff + specular, 1.0) * u_Color[index];
+	color = vec4(ambient + diff + specular, 1.0) * u_VertexColor[oIndex];
 }
