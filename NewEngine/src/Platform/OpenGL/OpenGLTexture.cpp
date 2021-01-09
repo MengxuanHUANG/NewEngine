@@ -35,10 +35,6 @@ namespace engine
 		{
 			stbi_image_free(m_LocalBuffer);
 		}
-
-		glActiveTexture(GL_TEXTURE);
-		glBindTexture(GL_TEXTURE_2D, m_RendererID);
-		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	OpenGLTexture::~OpenGLTexture()
 	{

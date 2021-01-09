@@ -65,12 +65,11 @@ namespace engine
 		{
 			textures[m_Textures.size() + i] = m_SpecularTextures[i]->GetRendererID();
 		}
-		RenderCommand::BindTextures(0, m_Textures.size() + m_Objects.size(), textures);
+		//RenderCommand::BindTextures(0, m_Textures.size() + m_Objects.size(), textures);
 
 		delete[] textures;
 
 		unsigned int mOffset = 0;
-
 		for (int i = 0; i < m_Objects.size(); i++)
 		{
 			for (int j = 0; j < m_Objects[i]->GetMaterialCount(); j++)
@@ -78,12 +77,19 @@ namespace engine
 				std::stringstream ss;
 				ss << "u_Materials[" << mOffset + j << "].";
 				m_ObjectShader->SetUniformFloat(ss.str().append("shininess"), m_Objects[i]->GetMaterial()[j]->shininess);
-				m_ObjectShader->SetUniformFloat(ss.str().append("diffuse"), j + mOffset);
-				m_ObjectShader->SetUniformFloat(ss.str().append("specular"), m_Textures.size() + j + mOffset);
+				//m_ObjectShader->SetUniformFloat(ss.str().append("diffuse"), j + mOffset);
+				//m_ObjectShader->SetUniformFloat(ss.str().append("specular"), m_Textures.size() + j + mOffset);
 			}
 			mOffset += m_Objects[i]->GetMaterialCount();
 		}
-		
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_Textures[0]->GetRendererID());
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, m_SpecularTextures[0]->GetRendererID());
+		m_ObjectShader->SetUniformFloat("temp", 0);
+		m_ObjectShader->SetUniformFloat("u_Materials[0].specular", 0);
+
 		m_ObjectShader->SetUniformFloat3("u_Light.position", m_SignleLight->GetPosition());
 		m_ObjectShader->SetUniformFloat3("u_Light.ambient", m_SignleLight->GetStrength() * m_SignleLight->GetAmbient() * glm::vec3(m_SignleLight->GetColor()));
 		m_ObjectShader->SetUniformFloat3("u_Light.diffuse", m_SignleLight->GetStrength() * m_SignleLight->GetDiffuse() * glm::vec3(m_SignleLight->GetColor()));

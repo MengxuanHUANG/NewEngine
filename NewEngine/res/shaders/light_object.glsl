@@ -54,6 +54,8 @@ in vec3 v_Normal;
 in vec3 v_Position;
 in vec2 v_TexCoord;
 
+uniform sampler2D temp;
+
 uniform Light u_Light;
 uniform vec3 u_ViewPos;
 uniform Material u_Materials[10];
@@ -83,5 +85,6 @@ void main()
 
 	//result
 	vec3 result = ambient + diffuse + specular;
-	color = vec4(result, 1.0);
+	//color = vec4(result, 1.0);
+	color = texture(temp, v_TexCoord);
 }
