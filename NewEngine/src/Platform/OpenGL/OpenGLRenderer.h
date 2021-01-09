@@ -13,6 +13,7 @@ namespace engine
 		virtual void Init(int width, int height) override;
 		virtual void Terminate() override;
 		virtual void ClearColor(glm::vec4 color) override;
+		virtual void BindTextures(unsigned int first, int count, const unsigned int* textures) override;
 		virtual void Draw(int count) override;
 	};
 }

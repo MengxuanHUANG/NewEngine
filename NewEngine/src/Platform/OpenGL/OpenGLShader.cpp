@@ -152,15 +152,15 @@ namespace engine
 	{
 		glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
 	}
-	void OpenGLShader::SetUniformArrayi(const std::string& name, const int* values)
+	void OpenGLShader::SetUniformArrayi(const std::string& name, int count, const int* values)
 	{
-		glUniform1iv(GetUniformLocation(name), sizeof(values)/sizeof(int), values);
+		glUniform1iv(GetUniformLocation(name), count, values);
 	}
-	void OpenGLShader::SetUniformArray4f(const std::string& name, unsigned int count, float* values)
+	void OpenGLShader::SetUniformArray4f(const std::string& name, int count, const float* values)
 	{
 		glUniform4fv(GetUniformLocation(name), count, values);
 	}
-	void OpenGLShader::SetUniformArrayMat4f(const std::string& name, unsigned int count, float* values)
+	void OpenGLShader::SetUniformArrayMat4f(const std::string& name, int count, const float* values)
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), count, GL_FALSE, values);
 	}

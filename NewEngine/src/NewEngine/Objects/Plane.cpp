@@ -16,7 +16,6 @@ namespace engine
 		indices = new unsigned int[]{
 			 0,  1,  2,  2,  3,  0
 		};
-		m_Materials.emplace_back(std::make_shared<Material>(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f), 1.0f));
 	}
 	Plane::Plane(glm::vec4 color, glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
 		:Object(translation, rotation, scale), m_Color(color)
@@ -31,7 +30,6 @@ namespace engine
 		indices = new unsigned int[]{
 			 0,  1,  2,  2,  3,  0
 		};
-		m_Materials.emplace_back(std::make_shared<Material>(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f), 1.0f));
 	}
 	Plane::Plane(const std::string& file_path, glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
 		:Object(translation, rotation, scale), m_Color(1.0f)
@@ -46,13 +44,18 @@ namespace engine
 		indices = new unsigned int[]{
 			 0,  1,  2,  2,  3,  0
 		};
-		m_Materials.emplace_back(std::make_shared<Material>(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f), 1.0f));
 	}
 	Plane::~Plane()
 	{
 		delete[] vertices;
 		delete[] indices;
 	}
+
+	void Plane::AddMaterial(const std::shared_ptr<Material>& material)
+	{
+		m_Materials.emplace_back(material);
+	}
+
 	void Plane::ReCalculateModelMat()
 	{
 		m_ModelMat = glm::translate(glm::mat4(1.0f), m_Translation);

@@ -28,6 +28,10 @@ namespace engine
 		MY_ENGINE_ASSERT(s_Renderer3D, "Renderer never initialized!");
 		delete s_Renderer3D;
 	}
+	void RenderCommand::BindTextures(unsigned int first, int count, const unsigned int* textures)
+	{
+		s_Renderer3D->BindTextures(first, count, textures);
+	}
 	void RenderCommand::Draw(int count)
 	{
 		s_Renderer3D->Draw(count);

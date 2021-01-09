@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <memory>
 #include <vector>
 
@@ -27,14 +28,13 @@ namespace engine
 
 	struct Material
 	{
-		glm::vec3 ambient;
-		glm::vec3 diffuse;
-		glm::vec3 specular;
+		float shininess;
 
-		float shiness;
+		std::string diffuse;
+		std::string specular;
 
-		Material(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, float shiness)
-			:ambient(ambient), diffuse(diffuse), specular(specular), shiness(shiness)
+		Material(float shininess, const std::string& diffuse, const std::string& specular)
+			:shininess(shininess), diffuse(diffuse), specular(specular)
 		{}
 	};
 

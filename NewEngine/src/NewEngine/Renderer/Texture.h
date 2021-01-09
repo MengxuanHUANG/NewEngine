@@ -9,6 +9,7 @@ namespace engine
 	public:
 		virtual ~Texture() = default;
 		virtual void Bind() const = 0;
+		virtual void BindUnit(unsigned int) = 0;
 		virtual void UnBind() const = 0;
 
 		virtual inline int GetWidth() const = 0;

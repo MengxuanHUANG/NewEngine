@@ -51,8 +51,6 @@ namespace engine
 			16, 17, 18, 18, 19, 16, //top
 			20, 21, 22, 22, 23, 20  //bottom
 		};
-		
-		m_Materials.emplace_back(std::make_shared<Material>(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f), 32.0f));
 	}
 
 	Cube::Cube(glm::vec4 color, glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
@@ -103,7 +101,6 @@ namespace engine
 			16, 17, 18, 18, 19, 16, //top
 			20, 21, 22, 22, 23, 20  //bottom
 		};
-		m_Materials.emplace_back(std::make_shared<Material>(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f), 32.0f));
 	}
 	Cube::Cube(const std::string& file_path, glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
 		:Object(translation, rotation, scale), m_Color(1.0f)
@@ -153,13 +150,18 @@ namespace engine
 			16, 17, 18, 18, 19, 16, //top
 			20, 21, 22, 22, 23, 20  //bottom
 		};
-		m_Materials.emplace_back(std::make_shared<Material>(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f), 32.0f));
 	}
 	Cube::~Cube()
 	{
 		delete[] vertices;
 		delete[] indices;
 	}
+
+	void Cube::AddMaterial(const std::shared_ptr<Material>& material)
+	{
+		m_Materials.emplace_back(material);
+	}
+
 	void Cube::ReCalculateModelMat()
 	{
 		m_ModelMat = glm::translate(glm::mat4(1.0f), m_Translation);

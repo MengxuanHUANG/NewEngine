@@ -53,9 +53,11 @@ namespace engine
 		std::vector<std::shared_ptr<Object> > m_Objects;
 		std::vector<std::shared_ptr<Light> > m_Lights;
 
+		std::vector<std::shared_ptr<Texture> > m_Textures;
+		std::vector<std::shared_ptr<Texture> > m_SpecularTextures;
+
 		std::shared_ptr<Light> m_SignleLight;
 
-		float* m_Colors = nullptr;
 		float* m_Models = nullptr;
 		float* m_NormalMatrixes = nullptr;
 

@@ -11,6 +11,7 @@ namespace engine
 		~OpenGLTexture();
 
 		virtual void Bind() const override;
+		virtual void BindUnit(unsigned int slot) override;
 		virtual void UnBind() const override;
 
 		virtual inline int GetWidth() const override { return m_Width; }

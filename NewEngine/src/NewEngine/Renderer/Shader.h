@@ -18,9 +18,9 @@ namespace engine
 		virtual void SetUniformFloat3(const std::string& name, const glm::vec3& value) = 0;
 		virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) = 0;
 
-		virtual void SetUniformArrayi(const std::string& name, const int* values) = 0;
-		virtual void SetUniformArray4f(const std::string& name, unsigned int count, float* values) = 0;
-		virtual void SetUniformArrayMat4f(const std::string& name, unsigned int count, float* values) = 0;
+		virtual void SetUniformArrayi(const std::string& name, int count, const int* values) = 0;
+		virtual void SetUniformArray4f(const std::string& name, int count, const float* values) = 0;
+		virtual void SetUniformArrayMat4f(const std::string& name, int count, const float* values) = 0;
 
 		static Shader* CreateShader(const std::string& shader_path);
 	};

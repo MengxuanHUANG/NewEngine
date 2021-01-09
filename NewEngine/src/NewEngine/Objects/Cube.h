@@ -18,7 +18,7 @@ namespace engine
 		~Cube();
 		
 		glm::vec4& GetColor() override { return m_Color; }
-		void SetTexture(const std::string& file_path);
+		void AddMaterial(const std::shared_ptr<Material>& material);
 
 		virtual void ReCalculateModelMat() override;
 

@@ -35,6 +35,14 @@ namespace engine
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
+	void OpenGLRenderer3D::BindTextures(unsigned int first, int count, const unsigned int* textures)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + first + i);
+			glBindTexture(GL_TEXTURE_2D, textures[i]);
+		}
+	}
 	void OpenGLRenderer3D::Draw(int count)
 	{
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);

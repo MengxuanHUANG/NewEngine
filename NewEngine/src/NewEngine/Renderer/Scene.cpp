@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Scene.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "RenderCommand.h"
 
 namespace engine
@@ -13,10 +16,6 @@ namespace engine
 	}
 	Scene::~Scene()
 	{
-		if (m_Colors)
-		{
-			delete[] m_Colors;
-		}
 		if (m_Models)
 		{
 			delete[] m_Models;
@@ -29,11 +28,6 @@ namespace engine
 	
 	void Scene::OnUpdate()
 	{
-		if (m_Colors != nullptr)
-		{
-			delete[] m_Colors;
-		}
-		m_Colors = new float[4 * m_Objects.size()];
 		if (m_Models != nullptr)
 		{
 			delete[] m_Models;
@@ -47,10 +41,6 @@ namespace engine
 		for (int index = 0; index < m_Objects.size(); index++)
 		{
 			m_Objects[index]->ReCalculateModelMat();
-			for (int i = 0; i < 4; i++)
-			{
-				m_Colors[i + index * 4] = m_Objects[index]->GetColor()[i];
-			}
 			for (int i = 0; i < 16; i++)
 			{
 				m_Models[i + index * 16] = m_Objects[index]->GetModelMat()[i / 4][i % 4];
@@ -66,21 +56,34 @@ namespace engine
 	void Scene::Draw()
 	{
 		m_ObjectShader->Bind();
+		unsigned int* textures = new unsigned int[m_Textures.size() + m_Objects.size()]();
+		for (int i = 0; i < m_Textures.size(); i++)
+		{
+			textures[i] = m_Textures[i]->GetRendererID();
+		}
+		for (int i = 0; i < m_SpecularTextures.size(); i++)
+		{
+			textures[m_Textures.size() + i] = m_SpecularTextures[i]->GetRendererID();
+		}
+		RenderCommand::BindTextures(0, m_Textures.size() + m_Objects.size(), textures);
+
+		delete[] textures;
+
 		unsigned int mOffset = 0;
+
 		for (int i = 0; i < m_Objects.size(); i++)
 		{
 			for (int j = 0; j < m_Objects[i]->GetMaterialCount(); j++)
 			{
 				std::stringstream ss;
 				ss << "u_Materials[" << mOffset + j << "].";
-				m_ObjectShader->SetUniformFloat3(ss.str().append("ambient"), m_Objects[i]->GetMaterial()[j]->ambient);
-				m_ObjectShader->SetUniformFloat3(ss.str().append("diffuse"), m_Objects[i]->GetMaterial()[j]->diffuse);
-				m_ObjectShader->SetUniformFloat3(ss.str().append("specular"), m_Objects[i]->GetMaterial()[j]->specular);
-				m_ObjectShader->SetUniformFloat(ss.str().append("shininess"), m_Objects[i]->GetMaterial()[j]->shiness);
+				m_ObjectShader->SetUniformFloat(ss.str().append("shininess"), m_Objects[i]->GetMaterial()[j]->shininess);
+				m_ObjectShader->SetUniformFloat(ss.str().append("diffuse"), j + mOffset);
+				m_ObjectShader->SetUniformFloat(ss.str().append("specular"), m_Textures.size() + j + mOffset);
 			}
 			mOffset += m_Objects[i]->GetMaterialCount();
 		}
-
+		
 		m_ObjectShader->SetUniformFloat3("u_Light.position", m_SignleLight->GetPosition());
 		m_ObjectShader->SetUniformFloat3("u_Light.ambient", m_SignleLight->GetStrength() * m_SignleLight->GetAmbient() * glm::vec3(m_SignleLight->GetColor()));
 		m_ObjectShader->SetUniformFloat3("u_Light.diffuse", m_SignleLight->GetStrength() * m_SignleLight->GetDiffuse() * glm::vec3(m_SignleLight->GetColor()));
@@ -92,7 +95,6 @@ namespace engine
 		m_ObjectShader->SetUniformArrayMat4f("u_NormalMat", m_Objects.size(), m_NormalMatrixes);
 		m_ObjectShader->SetUniformMat4("u_View", m_Camera.GetViewMatrix());
 		m_ObjectShader->SetUniformMat4("u_Projection", m_Camera.GetProjectionMatrix());
-		m_ObjectShader->SetUniformArray4f("u_VertexColor", m_Objects.size(), m_Colors);
 		m_ObjectVA->Bind();
 		m_ObjectIB->Bind();
 		RenderCommand::Draw(m_ObjectIndicesCount);
@@ -133,11 +135,6 @@ namespace engine
 	}
 	void Scene::FlushObject()
 	{
-		if (m_Colors != nullptr)
-		{
-			delete[] m_Colors;
-		}
-		m_Colors = new float[4 * m_Objects.size()];
 		if (m_Models != nullptr)
 		{
 			delete[] m_Models;
@@ -159,18 +156,22 @@ namespace engine
 		unsigned int mOffset = 0;
 		for (int index = 0; index < m_Objects.size(); index++)
 		{
-			for (int i = 0; i < 4; i++)
-			{
-				m_Colors[i + index * 4] = m_Objects[index]->GetColor()[i];
-			}
+			//Model Matrix
 			for (int i = 0; i < 16; i++)
 			{
 				m_Models[i + index * 16] = m_Objects[index]->GetModelMat()[i/4][i%4];
 			}
+			//Normal Matrix
 			glm::mat4 normalMat = glm::transpose(glm::inverse(m_Objects[index]->GetModelMat()));
 			for (int i = 0; i < 16; i++)
 			{
 				m_NormalMatrixes[i + index * 16] = normalMat[i / 4][i % 4];
+			}
+			//Textures
+			for (int i = 0; i < m_Objects[index]->GetMaterialCount(); i++)
+			{
+				m_Textures.emplace_back(std::shared_ptr<Texture>(Texture::CreateTexture(m_Objects[index]->GetMaterial()[i]->diffuse)));
+				m_SpecularTextures.emplace_back(std::shared_ptr<Texture>(Texture::CreateTexture(m_Objects[index]->GetMaterial()[i]->specular)));
 			}
 			//vertices
 			for (int i = 0; i < m_Objects[index]->GetVerticesCount(); i++)
