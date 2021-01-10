@@ -33,12 +33,6 @@ void main()
 #shader fragment
 #version 330
 
-struct Material {
-    float shininess;
-
-	sampler2D diffuse;
-	sampler2D specular; 
-}; 
 struct Light {
     vec3 position;
 
@@ -54,17 +48,18 @@ in vec3 v_Normal;
 in vec3 v_Position;
 in vec2 v_TexCoord;
 
-uniform sampler2D temp;
-
 uniform Light u_Light;
 uniform vec3 u_ViewPos;
-uniform Material u_Materials[10];
+
+uniform float u_Shininess[10];
+uniform sampler2D u_Diffuse[10];
+uniform sampler2D u_Specular[10];
 
 void main()
 {
 	int oIndex = int(v_ObjectIndex);
 	int mIndex = int(v_MaterialIndex);
-	vec3 mTexture = texture(u_Materials[mIndex].diffuse, v_TexCoord).rgb;
+	vec3 mTexture = texture(u_Diffuse[mIndex], v_TexCoord).rgb;
 
 	//normal vector
 	vec3 normal = normalize(v_Normal);
@@ -80,11 +75,10 @@ void main()
 	//specular
 	vec3 viewDir = normalize(u_ViewPos - v_Position);
 	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Materials[mIndex].shininess);
-	vec3 specular = u_Light.specular * (spec * texture(u_Materials[mIndex].specular, v_TexCoord).rgb);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Shininess[mIndex]);
+	vec3 specular = u_Light.specular * (spec * texture(u_Specular[mIndex], v_TexCoord).rgb);
 
 	//result
 	vec3 result = ambient + diffuse + specular;
-	//color = vec4(result, 1.0);
-	color = texture(temp, v_TexCoord);
+	color = vec4(result, 1.0);
 }

@@ -31,7 +31,7 @@ public:
 		m_Scene_1->AddObject(m_Cube);
 		m_Scene_1->AddLight(m_Light);
 
-		//m_Scene_1->AddObject(m_Plane);
+		m_Scene_1->AddObject(m_Plane);
 		m_Scene_2->AddLight(m_Light);
 
 		m_Scene_1->FlushObject();

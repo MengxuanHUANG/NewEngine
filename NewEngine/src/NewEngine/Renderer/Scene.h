@@ -41,6 +41,7 @@ namespace engine
 		unsigned int m_LightIndicesCount;
 
 		std::shared_ptr<VertexBuffer> m_ObjectVB;
+		//std::vector < std::shared_ptr<IndexBuffer> > m_ObjectIBs;
 		std::shared_ptr<IndexBuffer> m_ObjectIB;
 		std::shared_ptr<VertexArray> m_ObjectVA;
 		std::shared_ptr<Shader> m_ObjectShader;
