@@ -39,6 +39,10 @@ struct Light {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+	float constant;
+    float linear;
+    float quadratic;
 };
 layout(location = 0) out vec4 color;
 
@@ -78,7 +82,10 @@ void main()
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Shininess[mIndex]);
 	vec3 specular = u_Light.specular * (spec * texture(u_Specular[mIndex], v_TexCoord).rgb);
 
+	float distance = length(u_Light.position - v_Position);
+	float attenuation = 1.0 / (u_Light.constant + u_Light.linear * distance + u_Light.quadratic * (distance * distance));
+
 	//result
 	vec3 result = ambient + diffuse + specular;
-	color = vec4(result, 1.0);
+	color = vec4(result * attenuation, 1.0);
 }

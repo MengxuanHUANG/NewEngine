@@ -20,7 +20,6 @@ public:
 			1.0f, 100.0f, glm::vec3(-1.5f, 1.4f, 3.2f), glm::vec3(0.0f, 1.0f, 0.0f), -66.5f, -16.6f)
 	{
 		m_Scene_1 = std::make_shared<Scene>(shader_path + "light_object.glsl", shader_path + "Light.glsl", m_PerspectiveCam.GetCamera());
-		m_Scene_2 = std::make_shared<Scene>(shader_path + "light_object.glsl", shader_path + "Light.glsl", m_PerspectiveCam.GetCamera());
 		m_Cube = std::make_shared<Cube>(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f), glm::vec3(1.0f));
 		m_Plane = std::make_shared<Plane>(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, -0.5f, 0.0f), glm::vec3(-90.0f, 0.0f, 0.0f), glm::vec3(5.0f , 5.0f, 1.0f));
 		m_Light = std::make_shared<PointLight>(glm::vec3(1.2f, 1.0f, 2.0f), glm::vec4(1.0f));
@@ -32,13 +31,9 @@ public:
 		m_Scene_1->AddLight(m_Light);
 
 		m_Scene_1->AddObject(m_Plane);
-		m_Scene_2->AddLight(m_Light);
 
 		m_Scene_1->FlushObject();
 		m_Scene_1->FlushLight();
-
-		//m_Scene_2->FlushObject();
-		//m_Scene_2->FlushLight();
 	}
 	~ExampleLayer()
 	{
@@ -120,7 +115,6 @@ public:
 	}
 private:
 	std::shared_ptr<Scene> m_Scene_1;
-	std::shared_ptr<Scene> m_Scene_2;
 	std::shared_ptr<Cube> m_Cube;
 	std::shared_ptr<Plane> m_Plane;
 	std::shared_ptr<PointLight> m_Light;

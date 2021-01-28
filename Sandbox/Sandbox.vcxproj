@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\AssimpLayer.h" />
     <ClInclude Include="src\ExampleLayer.h" />
   </ItemGroup>
   <ItemGroup>

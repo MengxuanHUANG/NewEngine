@@ -86,6 +86,9 @@ namespace engine
 		m_ObjectShader->SetUniformFloat3("u_Light.ambient", m_SignleLight->GetStrength() * m_SignleLight->GetAmbient() * glm::vec3(m_SignleLight->GetColor()));
 		m_ObjectShader->SetUniformFloat3("u_Light.diffuse", m_SignleLight->GetStrength() * m_SignleLight->GetDiffuse() * glm::vec3(m_SignleLight->GetColor()));
 		m_ObjectShader->SetUniformFloat3("u_Light.specular", m_SignleLight->GetStrength() * m_SignleLight->GetSpecular() * glm::vec3(m_SignleLight->GetColor()));
+		m_ObjectShader->SetUniformFloat("u_Light.constant", 1.0f);
+		m_ObjectShader->SetUniformFloat("u_Light.linear", 0.09f);
+		m_ObjectShader->SetUniformFloat("u_Light.quadratic", 0.032f);
 
 		m_ObjectShader->SetUniformFloat3("u_ViewPos", m_Camera.GetPosition());
 		m_ObjectShader->SetUniformArrayMat4f("u_Models", m_Objects.size(), m_Models);
@@ -152,6 +155,7 @@ namespace engine
 		unsigned int vOffset = 0;
 		unsigned int iOffset = 0;
 		unsigned int mOffset = 0;
+		unsigned int textureCount = 0;
 		for (int index = 0; index < m_Objects.size(); index++)
 		{
 			//Model Matrix
@@ -168,8 +172,13 @@ namespace engine
 			//Textures
 			for (int i = 0; i < m_Objects[index]->GetMaterialCount(); i++)
 			{
-				m_Textures.emplace_back(std::shared_ptr<Texture>(Texture::CreateTexture(m_Objects[index]->GetMaterial()[i]->diffuse)));
-				m_SpecularTextures.emplace_back(std::shared_ptr<Texture>(Texture::CreateTexture(m_Objects[index]->GetMaterial()[i]->specular)));
+				if (m_Objects[index]->GetMaterial()[i]->diffuse.length() != 0)
+				{
+					m_Textures.emplace_back(std::shared_ptr<Texture>(Texture::CreateTexture(m_Objects[index]->GetMaterial()[i]->diffuse)));
+					m_SpecularTextures.emplace_back(std::shared_ptr<Texture>(Texture::CreateTexture(m_Objects[index]->GetMaterial()[i]->specular)));
+
+					textureCount += 2;
+				}
 			}
 			//vertices
 			for (int i = 0; i < m_Objects[index]->GetVerticesCount(); i++)
